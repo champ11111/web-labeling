@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button, Card, Radio } from "antd";
 import { markAsLabelled } from "@/api/user-data";
 import Image from "next/image";
+
 import { useAtom } from "jotai";
 import { dataAtom } from "../data/page";
 import Navbar from "@/components/navbar";
