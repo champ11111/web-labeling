@@ -39,10 +39,10 @@ export class UserService {
         },
       },
     });
-    return users.userData.map((userData) => userData.data);
+    return users?.userData.map((userData) => userData.data);
   }
 
-  async getNonLabelledDataByUsername(username: string): Promise<Data[]> {
+  async getUnlabelledDataByUsername(username: string): Promise<Data[]> {
     const users = await this.prisma.user.findUnique({
       where: { username },
       select: {
@@ -54,6 +54,6 @@ export class UserService {
         },
       },
     });
-    return users.userData.map((userData) => userData.data);
+    return users?.userData.map((userData) => userData.data);
   }
 }

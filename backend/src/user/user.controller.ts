@@ -32,11 +32,11 @@ export class UserController {
     return this.userService.getLabelledDataByUsername(username);
   }
 
-  @Get('/non-labelled-data/:username')
-  async getNonLabelledDataByUsername(
+  @Get('/unlabelled-data/:username')
+  async getUnlabelledDataByUsername(
     @Param('username') username: string,
   ): Promise<Data[]> {
-    return this.userService.getNonLabelledDataByUsername(username);
+    return this.userService.getUnlabelledDataByUsername(username);
   }
 
   // @Post()

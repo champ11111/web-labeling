@@ -33,10 +33,21 @@ export class UserDataService {
     return this.prisma.userData.delete({ where: { id } });
   }
 
-  async markAsLabelled(id: string): Promise<UserData> {
+  async markAsLabelled(
+    answer: string,
+    userId: string,
+    dataId: string,
+  ): Promise<UserData> {
+    const userData = await this.prisma.userData.findFirst({
+      where: { userId, dataId },
+    });
+    if (userData?.isLabelled) {
+      throw new Error('Data is already labelled');
+    }
+
     return this.prisma.userData.update({
-      where: { id },
-      data: { isLabelled: true },
+      where: { id: userData.id },
+      data: { isLabelled: true, answer },
     });
   }
 }

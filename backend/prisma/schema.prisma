@@ -26,6 +26,7 @@ model UserData {
   dataId     String   @map("data_id")
   isLabelled Boolean  @default(false) @map("is_labelled")
   createdAt  DateTime @default(now()) @map("created_at")
+  answer     String?
 
   @@map("user_data")
 }
@@ -41,6 +42,7 @@ model Data {
   userData    UserData[]
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
+  type        AnswerType @default(CHOICE)
 
   @@map("data")
 }
@@ -53,4 +55,9 @@ model DataSet {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("data_set")
+}
+
+enum AnswerType {
+  CHOICE
+  INPUT
 }

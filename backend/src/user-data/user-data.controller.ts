@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Body,
   Param,
@@ -42,9 +41,15 @@ export class UserDataController {
     return this.userDataService.updateUserData(id, data);
   }
 
-  @Patch('mark-as-labelled/:id')
-  async markAsLabelled(@Param('id') id: string): Promise<UserData> {
-    return this.userDataService.markAsLabelled(id);
+  @Post('mark-as-labelled')
+  async markAsLabelled(
+    @Body() data: { answer: string; userId: string; dataId: string },
+  ): Promise<UserData> {
+    return this.userDataService.markAsLabelled(
+      data.answer,
+      data.userId,
+      data.dataId,
+    );
   }
 
   @Delete(':id')

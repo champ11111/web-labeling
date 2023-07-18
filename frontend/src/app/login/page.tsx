@@ -1,26 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import { Form, Input, Button, Alert } from "antd";
-import { register } from "@/api/auth";
+import { login } from "@/api/auth";
 
-const RegisterPage: React.FC = () => {
-  const [registrationError, setRegistrationError] = useState<string | null>(
-    null
-  );
+const LoginPage: React.FC = () => {
+  const [loginError, setLoginError] = useState<string | null>(null);
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
     try {
-      if (values.password.length < 6) {
-        throw new Error("Password should be at least 6 characters long.");
-      }
-
-      await register(values);
-      console.log("Registration successful");
-      setRegistrationError(null);
+      await login(values);
+      console.log("Login successful");
+      setLoginError(null);
     } catch (error) {
-      console.error("Registration failed:", error);
-      setRegistrationError("Invalid username or password. Please try again.");
+      console.error("Login failed:", error);
+      setLoginError("Invalid username or password. Please try again.");
     }
   };
 
@@ -28,15 +22,15 @@ const RegisterPage: React.FC = () => {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <Form
         form={form}
-        name="register"
+        name="login"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         className="bg-white shadow-md rounded px-8 py-6"
         style={{ width: 300 }}
       >
-        {registrationError && (
+        {loginError && (
           <Alert
-            message={registrationError}
+            message={loginError}
             type="error"
             showIcon
             style={{ marginBottom: 16 }}
@@ -53,13 +47,7 @@ const RegisterPage: React.FC = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[
-            { required: true, message: "Please enter your password!" },
-            {
-              min: 6,
-              message: "Password should be at least 6 characters long.",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter your password!" }]}
         >
           <Input.Password
             placeholder="Password"
@@ -70,10 +58,10 @@ const RegisterPage: React.FC = () => {
           <Button
             type="primary"
             htmlType="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded focus:outline-none focus:shadow-outline mt-1"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded focus:outline-none focus:shadow-outline"
             style={{ width: "100%" }}
           >
-            Register
+            Login
           </Button>
         </Form.Item>
       </Form>
@@ -81,4 +69,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
