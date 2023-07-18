@@ -39,10 +39,10 @@ export class UserController {
     return this.userService.getNonLabelledDataByUsername(username);
   }
 
-  @Post()
-  async createUser(@Body() data: Prisma.UserCreateInput): Promise<User> {
-    return this.userService.createUser(data);
-  }
+  // @Post()
+  // async createUser(@Body() data: Prisma.UserCreateInput): Promise<User> {
+  //   return this.userService.createUser(data);
+  // }
 
   @Patch(':id')
   async updateUser(

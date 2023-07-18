@@ -8,6 +8,7 @@ import { DataModule } from './data/data.module';
 import { UserModule } from './user/user.module';
 import { DataSetModule } from './data-set/data-set.module';
 import { UserDataModule } from './user-data/user-data.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserDataModule } from './user-data/user-data.module';
     UserModule,
     DataSetModule,
     UserDataModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
