@@ -9,8 +9,7 @@ const Navbar: React.FC<NavbarProps> = ({ username }) => {
   const router = useRouter();
 
   const handleLogout = () => {
-    document.cookie =
-      "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.removeItem("isLogin");
     router.push("/login");
   };
 

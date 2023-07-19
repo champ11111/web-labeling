@@ -17,6 +17,7 @@ const RegisterPage: React.FC = () => {
         throw new Error("Password should be at least 6 characters long.");
       }
       await register(values);
+      localStorage.setItem("isLogin", "true");
       router.push("/data");
       setRegistrationError(null);
     } catch (error) {

@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
     try {
       await login(values);
       setLoginError(null);
+      localStorage.setItem("isLogin", "true");
       router.push("/data");
     } catch (error) {
       setLoginError("Invalid username or password. Please try again.");

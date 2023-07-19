@@ -27,6 +27,12 @@ const LabelPage: React.FC = () => {
     answer: "",
   });
 
+  if (typeof window !== "undefined") {
+    if (!localStorage.getItem("isLogin")) {
+      router.push("/login");
+    }
+  }
+
   if (!data) {
     router.push("/data");
   }

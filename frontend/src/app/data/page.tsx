@@ -27,6 +27,12 @@ const DataPage: React.FC = () => {
   const [data, setData] = useAtom(dataAtom);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  if (typeof window !== "undefined") {
+    if (!localStorage.getItem("isLogin")) {
+      router.push("/login");
+    }
+  }
+
   useEffect(() => {
     fetchAllData();
   }, []);
