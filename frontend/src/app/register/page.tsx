@@ -14,9 +14,7 @@ const RegisterPage: React.FC = () => {
       if (values.password.length < 6) {
         throw new Error("Password should be at least 6 characters long.");
       }
-
       await register(values);
-      console.log("Registration successful");
       setRegistrationError(null);
     } catch (error) {
       console.error("Registration failed:", error);

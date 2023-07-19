@@ -56,4 +56,19 @@ export class UserService {
     });
     return users?.userData.map((userData) => userData.data);
   }
+
+  async getMe(userId: string): Promise<{ id: string; username: string }> {
+    if (userId == null) {
+      throw new Error('User not found');
+    }
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (user == null) {
+      throw new Error('User not found');
+    }
+
+    return { id: user.id, username: user.username };
+  }
 }

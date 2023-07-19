@@ -47,7 +47,32 @@ export class UserDataService {
 
     return this.prisma.userData.update({
       where: { id: userData.id },
-      data: { isLabelled: true, answer },
+      data: { isLabelled: true, answer: answer },
     });
+  }
+
+  async updateAnswer(
+    answer: string,
+    userId: string,
+    dataId: string,
+  ): Promise<UserData> {
+    const userData = await this.prisma.userData.findFirst({
+      where: { userId, dataId },
+    });
+    if (!userData?.isLabelled) {
+      throw new Error('Data is not labelled');
+    }
+
+    return this.prisma.userData.update({
+      where: { id: userData.id },
+      data: { answer: answer },
+    });
+  }
+
+  async getUserDataByUserIdAndDataId(
+    userId: string,
+    dataId: string,
+  ): Promise<UserData | null> {
+    return this.prisma.userData.findFirst({ where: { userId, dataId } });
   }
 }

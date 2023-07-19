@@ -59,4 +59,9 @@ export class AuthService {
   ): Promise<boolean> {
     return bcrypt.compare(plainPassword, hashedPassword);
   }
+
+  async verifyToken(token: string): Promise<{ userId: string }> {
+    const res = await this.jwtService.verify<{ userId: string }>(token);
+    return res;
+  }
 }

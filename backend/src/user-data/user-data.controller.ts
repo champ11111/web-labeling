@@ -26,6 +26,18 @@ export class UserDataController {
     return this.userDataService.getUserDataById(id);
   }
 
+  @Post('user/data')
+  async getUserDataByUserIdAndDataId(
+    @Body() data: { userId: string; dataId: string },
+  ): Promise<UserData> {
+    const userData = await this.userDataService.getUserDataByUserIdAndDataId(
+      data.userId,
+      data.dataId,
+    );
+    if (!userData) throw new Error('User data not found');
+    return userData;
+  }
+
   @Post()
   async createUserData(
     @Body() data: Prisma.UserDataUncheckedCreateInput,
@@ -46,6 +58,17 @@ export class UserDataController {
     @Body() data: { answer: string; userId: string; dataId: string },
   ): Promise<UserData> {
     return this.userDataService.markAsLabelled(
+      data.answer,
+      data.userId,
+      data.dataId,
+    );
+  }
+
+  @Post('update-answer')
+  async updateAnswer(
+    @Body() data: { answer: string; userId: string; dataId: string },
+  ): Promise<UserData> {
+    return this.userDataService.updateAnswer(
       data.answer,
       data.userId,
       data.dataId,
