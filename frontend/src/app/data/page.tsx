@@ -1,89 +1,106 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Table, Button, Card, Divider, Typography } from "antd";
+import { useRouter } from "next/navigation";
+import { Table, Button, Card, Divider, Typography, Spin } from "antd";
 import {
   getLabelledDataByUsername,
+  getMe,
   getUnlabelledDataByUsername,
 } from "@/api/user";
 import Navbar from "@/components/navbar";
-import { atom, useAtom } from "jotai";
-
-export interface DataItem {
-  id: string;
-  title: string;
-  url: string;
-  coordinateX: number;
-  coordinateY: number;
-  dataSetId: string;
-}
+import { useAtom } from "jotai";
+import { DataItem, dataAtom } from "@/atom/data-atom";
+import moment from "moment";
+import { ColumnType } from "antd/lib/table";
 
 const { Title } = Typography;
-export const dataAtom = atom({});
+
+const paginationConfig = {
+  pageSize: 5,
+};
 
 const DataPage: React.FC = () => {
+  const router = useRouter();
   const [unlabelledData, setUnlabelledData] = useState<DataItem[]>([]);
   const [labelledData, setLabelledData] = useState<DataItem[]>([]);
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchUnlabelledData();
-    fetchLabelledData();
-    setUsername("John Doe"); // Replace with the actual username from authentication
+    fetchAllData();
   }, []);
 
-  const fetchUnlabelledData = async () => {
+  const fetchAllData = async () => {
     try {
-      const response = await getUnlabelledDataByUsername("regisiter1");
-      setUnlabelledData(response.data);
-    } catch (error) {
-      console.error("Failed to fetch unlabelled data:", error);
-    }
-  };
+      setIsLoading(true);
 
-  const fetchLabelledData = async () => {
-    try {
-      const response = await getLabelledDataByUsername("regisiter1");
-      setLabelledData(response.data);
-    } catch (error) {
-      console.error("Failed to fetch labelled data:", error);
+      const res = await getMe();
+      setUsername(res.data.username);
+
+      const unlabelledData = await getUnlabelledDataByUsername(
+        res.data.username
+      );
+      setUnlabelledData(unlabelledData.data);
+
+      const labelledData = await getLabelledDataByUsername(res.data.username);
+      setLabelledData(labelledData.data);
+
+      setIsLoading(false);
+    } catch {
+      router.push("/login");
     }
   };
 
   const handleLabelData = (dataItem: DataItem) => {
-    setData(() => dataItem);
-    console.log(data);
-    // Navigate to the label data page with the data's ID
+    setData(dataItem);
+    router.push("/label");
   };
 
   const handleEditLabelData = (dataItem: DataItem) => {
     setData(dataItem);
-    console.log(data);
-    // Navigate to the edit label data page with the data's ID
+    router.push("/label");
   };
 
-  const unlabelledDataColumns = [
-    { title: "Title", dataIndex: "title", key: "title", width: "20%" },
+  const unlabelledDataColumns: ColumnType<DataItem>[] = [
+    { title: "Title", dataIndex: "title", key: "title", width: "10%" },
     {
       title: "URL",
       dataIndex: "url",
       key: "url",
-      width: "40%",
+      width: "20%",
       render: (url: string) => (
-        <img src={url} width={100} height={100} alt="Labelled Image" />
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={url} width={100} height={100} alt="Unlabelled Image" />
       ),
     },
     {
       title: "Coordinate X",
       dataIndex: "coordinateX",
       key: "coordinateX",
-      width: "10%",
+      width: "5%",
     },
     {
       title: "Coordinate Y",
       dataIndex: "coordinateY",
       key: "coordinateY",
-      width: "10%",
+      width: "5%",
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: "20%",
+      render: (createdAt: string) =>
+        moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+    },
+    {
+      title: "Updated At",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      width: "20%",
+      render: (updatedAt: string) =>
+        moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "Action",
@@ -97,14 +114,15 @@ const DataPage: React.FC = () => {
     },
   ];
 
-  const labelledDataColumns = [
-    { title: "Title", dataIndex: "title", key: "title", width: "20%" },
+  const labelledDataColumns: ColumnType<DataItem>[] = [
+    { title: "Title", dataIndex: "title", key: "title", width: "10%" },
     {
-      title: "URL",
+      title: "Image",
       dataIndex: "url",
       key: "url",
-      width: "40%",
+      width: "20%",
       render: (url: string) => (
+        // eslint-disable-next-line @next/next/no-img-element
         <img src={url} width={100} height={100} alt="Labelled Image" />
       ),
     },
@@ -112,13 +130,29 @@ const DataPage: React.FC = () => {
       title: "Coordinate X",
       dataIndex: "coordinateX",
       key: "coordinateX",
-      width: "10%",
+      width: "5%",
     },
     {
       title: "Coordinate Y",
       dataIndex: "coordinateY",
       key: "coordinateY",
-      width: "10%",
+      width: "5%",
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: "20%",
+      render: (createdAt: string) =>
+        moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+    },
+    {
+      title: "Updated At",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      width: "20%",
+      render: (updatedAt: string) =>
+        moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       title: "Action",
@@ -132,34 +166,42 @@ const DataPage: React.FC = () => {
     },
   ];
 
-  const paginationConfig = {
-    pageSize: 5,
-  };
-
   return (
     <div>
-      <Navbar username={username} />
-      <Card className="flex justify-center items-center p-8 rounded-none">
-        <div className="text-center mb-6">
-          <Title level={4}>Unlabelled Data</Title>
-        </div>
-        <Table
-          columns={unlabelledDataColumns}
-          dataSource={unlabelledData}
-          rowKey="id"
-          pagination={paginationConfig}
-        />
-        <Divider />
-        <div className="text-center mt-6">
-          <Title level={4}>Labelled Data</Title>
-        </div>
-        <Table
-          columns={labelledDataColumns}
-          dataSource={labelledData}
-          rowKey="id"
-          pagination={paginationConfig}
-        />
-      </Card>
+      <div>
+        <Navbar username={username} />
+        <Card className="flex justify-center items-center p-8 rounded-none">
+          <div className="text-center mb-6">
+            <Title level={4}>Unlabelled Data</Title>
+          </div>
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <Table
+              columns={unlabelledDataColumns}
+              dataSource={unlabelledData}
+              rowKey="id"
+              pagination={paginationConfig}
+            />
+          )}
+
+          <Divider />
+
+          <div className="text-center mt-6">
+            <Title level={4}>Labelled Data</Title>
+          </div>
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <Table
+              columns={labelledDataColumns}
+              dataSource={labelledData}
+              rowKey="id"
+              pagination={paginationConfig}
+            />
+          )}
+        </Card>
+      </div>
     </div>
   );
 };

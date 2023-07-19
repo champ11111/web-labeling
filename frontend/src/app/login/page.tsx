@@ -2,20 +2,25 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Alert } from "antd";
 import { login } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
     try {
       await login(values);
-      console.log("Login successful");
       setLoginError(null);
+      router.push("/data");
     } catch (error) {
-      console.error("Login failed:", error);
       setLoginError("Invalid username or password. Please try again.");
     }
+  };
+
+  const handleRegisterClick = () => {
+    router.push("/register");
   };
 
   return (
@@ -64,6 +69,12 @@ const LoginPage: React.FC = () => {
             Login
           </Button>
         </Form.Item>
+        <div className="text-center mt-4">
+          <p>Do not have an account?</p>
+          <a className="text-blue-500 underline" onClick={handleRegisterClick}>
+            Register here
+          </a>
+        </div>
       </Form>
     </div>
   );

@@ -21,7 +21,9 @@ export const getLabelledDataByUsername = (username: string) => {
 };
 
 export const getUnlabelledDataByUsername = (username: string) => {
-  const a = api.get(`/users/unlabelled-data/${username}`);
-  console.log(a);
   return api.get(`/users/unlabelled-data/${username}`);
+};
+
+export const getMe = () => {
+  return api.get(`/users/me`);
 };

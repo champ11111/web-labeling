@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Alert } from "antd";
 import { register } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 const RegisterPage: React.FC = () => {
+  const router = useRouter();
   const [registrationError, setRegistrationError] = useState<string | null>(
     null
   );
@@ -14,14 +16,16 @@ const RegisterPage: React.FC = () => {
       if (values.password.length < 6) {
         throw new Error("Password should be at least 6 characters long.");
       }
-
       await register(values);
-      console.log("Registration successful");
       setRegistrationError(null);
     } catch (error) {
       console.error("Registration failed:", error);
       setRegistrationError("Invalid username or password. Please try again.");
     }
+  };
+
+  const handleLoginClick = () => {
+    router.push("/login");
   };
 
   return (
@@ -76,6 +80,11 @@ const RegisterPage: React.FC = () => {
             Register
           </Button>
         </Form.Item>
+        <div className="text-center mt-4">
+          <a className="text-blue-500 underline" onClick={handleLoginClick}>
+            Login here
+          </a>
+        </div>
       </Form>
     </div>
   );
