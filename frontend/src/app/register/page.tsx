@@ -17,10 +17,11 @@ const RegisterPage: React.FC = () => {
         throw new Error("Password should be at least 6 characters long.");
       }
       await register(values);
+      router.push("/data");
       setRegistrationError(null);
     } catch (error) {
       console.error("Registration failed:", error);
-      setRegistrationError("Invalid username or password. Please try again.");
+      setRegistrationError("Username already exists. Please try again.");
     }
   };
 
