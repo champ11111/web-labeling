@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Radio, Spin } from "antd";
@@ -11,6 +12,7 @@ import Navbar from "@/components/navbar";
 import { UserData, dataAtom } from "@/atom/data-atom";
 import { useRouter } from "next/navigation";
 import { getMe } from "@/api/user";
+import ManIcon from "@mui/icons-material/Man";
 
 const LabelPage: React.FC = () => {
   const router = useRouter();
@@ -96,12 +98,20 @@ const LabelPage: React.FC = () => {
                 alt="Labelled Image"
                 className="block w-[400px] h-[400px] object-cover border border-gray-300 "
               />
+              <ManIcon
+                style={{
+                  top: `${data ? data.coordinateY * 400 : 0}px`,
+                  left: `${data ? data.coordinateX * 400 : 0}px`,
+                }}
+                fontSize="large"
+                className="absolute  text-emerald-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+              />
               <div
                 style={{
                   top: `${data ? data.coordinateY * 400 : 0}px`,
                   left: `${data ? data.coordinateX * 400 : 0}px`,
                 }}
-                className="absolute  w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute  w-1 h-1 bg-black rounded-full transform -translate-x-1/2 -translate-y-1/2"
               />
             </div>
             <div className="mt-4">
