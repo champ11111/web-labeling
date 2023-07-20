@@ -81,6 +81,9 @@ const LabelPage: React.FC = () => {
   };
 
   return (
+    <Head>
+          <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+        </Head>
     <div>
       <Navbar username={username} />
       <Card className="flex justify-center items-center p-8 rounded-none">
@@ -88,12 +91,22 @@ const LabelPage: React.FC = () => {
           <Spin />
         ) : (
           <>
-            <img
-              src={data?.url}
-              width={500}
-              height={500}
-              alt="Labelled Image"
-            />
+            <div className="relative">
+              <img
+                src={data?.url}
+                width={400}
+                height={400}
+                alt="Labelled Image"
+                className="block w-[400px] h-[400px] object-cover"
+              />
+              <div
+                style={{
+                  top: `${data ? data.coordinateY * 400 : 0}px`,
+                  left: `${data ? data.coordinateX * 400 : 0}px`,
+                }}
+                className="absolute  w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+              />
+            </div>
             <div className="mt-4">
               <Radio.Group
                 onChange={handleLabelSelection}

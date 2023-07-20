@@ -28,6 +28,7 @@ model UserData {
   createdAt  DateTime @default(now()) @map("created_at")
   answer     String?
 
+  @@unique([userId, dataId])
   @@map("user_data")
 }
 
@@ -35,8 +36,8 @@ model Data {
   id          String     @id @default(cuid())
   title       String
   url         String
-  coordinateX Int        @map("coordinate_x")
-  coordinateY Int        @map("coordinate_y")
+  coordinateX Float      @map("coordinate_x")
+  coordinateY Float      @map("coordinate_y")
   dataSet     DataSet    @relation(fields: [dataSetId], references: [id])
   dataSetId   String     @map("data_set_id")
   userData    UserData[]
