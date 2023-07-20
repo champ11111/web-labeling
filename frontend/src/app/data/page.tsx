@@ -69,7 +69,7 @@ const DataPage: React.FC = () => {
   };
 
   const unlabelledDataColumns: ColumnType<DataItem>[] = [
-    { title: "Title", dataIndex: "title", key: "title", width: "10%" },
+    { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
     {
       title: "URL",
       dataIndex: "url",
@@ -121,7 +121,7 @@ const DataPage: React.FC = () => {
   ];
 
   const labelledDataColumns: ColumnType<DataItem>[] = [
-    { title: "Title", dataIndex: "title", key: "title", width: "10%" },
+    { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
     {
       title: "Image",
       dataIndex: "url",

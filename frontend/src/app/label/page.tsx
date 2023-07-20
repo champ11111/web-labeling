@@ -81,12 +81,9 @@ const LabelPage: React.FC = () => {
   };
 
   return (
-    <Head>
-          <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
-        </Head>
     <div>
       <Navbar username={username} />
-      <Card className="flex justify-center items-center p-8 rounded-none">
+      <Card className="flex justify-center items-center p-8 rounded-none ">
         {isLoading ? (
           <Spin />
         ) : (
@@ -97,7 +94,7 @@ const LabelPage: React.FC = () => {
                 width={400}
                 height={400}
                 alt="Labelled Image"
-                className="block w-[400px] h-[400px] object-cover"
+                className="block w-[400px] h-[400px] object-cover border border-gray-300 "
               />
               <div
                 style={{
