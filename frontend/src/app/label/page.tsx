@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Card, Radio, Spin } from "antd";
 import {
   changeAnswer,
@@ -29,21 +29,18 @@ const LabelPage: React.FC = () => {
     answer: "",
   });
 
-  if (typeof window !== "undefined") {
-    if (!localStorage.getItem("isLogin")) {
-      router.push("/login");
-    }
-  }
-
-  if (!data) {
-    router.push("/data");
-  }
-
   useEffect(() => {
-    fetchMe();
-  }, []);
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("isLogin")) {
+        router.push("/login");
+      }
+    }
+    if (!data) {
+      router.push("/data");
+    }
+  }, [data, router]);
 
-  const fetchMe = async () => {
+  const fetchMe = useCallback(async () => {
     try {
       setIsLoading(true);
       const user = await getMe();
@@ -61,7 +58,11 @@ const LabelPage: React.FC = () => {
     } catch (error) {
       router.push("/data");
     }
-  };
+  }, [data, router]);
+
+  useEffect(() => {
+    fetchMe();
+  }, [fetchMe]);
 
   const handleLabelSelection = (e: any) => {
     setSelectedLabel(e.target.value);
