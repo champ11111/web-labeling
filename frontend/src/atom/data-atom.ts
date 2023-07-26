@@ -17,7 +17,7 @@ export interface UserData {
   userId: string;
   dataId: string;
   isLabelled: boolean;
-  answer: string;
+  answers: string[];
 }
 
 export const dataAtom = atom<DataItem | undefined>(undefined);

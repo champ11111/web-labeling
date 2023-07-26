@@ -34,38 +34,43 @@ export class UserDataService {
   }
 
   async markAsLabelled(
-    answer: string,
+    answers: string[],
     userId: string,
     dataId: string,
   ): Promise<UserData> {
     const userData = await this.prisma.userData.findFirst({
       where: { userId, dataId },
     });
+
     if (userData?.isLabelled) {
       throw new Error('Data is already labelled');
     }
 
     return this.prisma.userData.update({
       where: { id: userData.id },
-      data: { isLabelled: true, answer: answer },
+      data: {
+        isLabelled: true,
+        answers,
+      },
     });
   }
 
   async updateAnswer(
-    answer: string,
+    answers: string[],
     userId: string,
     dataId: string,
   ): Promise<UserData> {
     const userData = await this.prisma.userData.findFirst({
       where: { userId, dataId },
     });
+
     if (!userData?.isLabelled) {
       throw new Error('Data is not labelled');
     }
 
     return this.prisma.userData.update({
       where: { id: userData.id },
-      data: { answer: answer },
+      data: { answers },
     });
   }
 

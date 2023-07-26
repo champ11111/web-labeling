@@ -1,23 +1,27 @@
 import api from "./api";
 
 export const markAsLabelled = (
-  answer: string,
+  answers: string[],
   userId: string,
   dataId: string
 ) => {
   return api.post(`/user-data/mark-as-labelled`, {
-    answer,
+    answers,
     userId,
     dataId,
   });
 };
 
 export const changeAnswer = (
-  answer: string,
+  answers: string[],
   userId: string,
   dataId: string
 ) => {
-  return api.post(`/user-data/update-answer`, { answer, userId, dataId });
+  return api.post(`/user-data/update-answer`, {
+    answers,
+    userId,
+    dataId,
+  });
 };
 
 export const getUserDataByUserIdAndDataId = (

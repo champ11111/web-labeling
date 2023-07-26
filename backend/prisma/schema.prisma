@@ -26,7 +26,7 @@ model UserData {
   dataId     String   @map("data_id")
   isLabelled Boolean  @default(false) @map("is_labelled")
   createdAt  DateTime @default(now()) @map("created_at")
-  answer     String?
+  answers    String[]
 
   @@unique([userId, dataId])
   @@map("user_data")

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Card, Radio, Spin } from "antd";
+import { Button, Card, Checkbox, Radio, Spin } from "antd";
 import {
   changeAnswer,
   getUserDataByUserIdAndDataId,
@@ -16,7 +16,7 @@ import ManIcon from "@mui/icons-material/Man";
 
 const LabelPage: React.FC = () => {
   const router = useRouter();
-  const [selectedLabel, setSelectedLabel] = useState("");
+  const [selectedLabel, setSelectedLabel] = useState<string[]>([]);
   const [userId, setUserId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
@@ -26,8 +26,10 @@ const LabelPage: React.FC = () => {
     userId: "",
     dataId: "",
     isLabelled: false,
-    answer: "",
+    answers: [],
   });
+
+  const answerOptions = ["inside", "near", "front", "far", "back"];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,7 +54,7 @@ const LabelPage: React.FC = () => {
       );
       setUserData(userData.data);
       if (userData.data.isLabelled) {
-        setSelectedLabel(userData.data.answer);
+        setSelectedLabel(userData.data.answers);
       }
       setIsLoading(false);
     } catch (error) {
@@ -63,10 +65,6 @@ const LabelPage: React.FC = () => {
   useEffect(() => {
     fetchMe();
   }, [fetchMe]);
-
-  const handleLabelSelection = (e: any) => {
-    setSelectedLabel(e.target.value);
-  };
 
   const handleSubmit = async () => {
     try {
@@ -99,36 +97,41 @@ const LabelPage: React.FC = () => {
                 alt="Labelled Image"
                 className="block w-[400px] h-[400px] object-cover border border-gray-300 "
               />
+
               <ManIcon
                 style={{
                   top: `${data ? data.coordinateY * 400 : 0}px`,
                   left: `${data ? data.coordinateX * 400 : 0}px`,
                 }}
                 fontSize="large"
-                className="absolute  text-emerald-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute text-emerald-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
               />
               <div
                 style={{
                   top: `${data ? data.coordinateY * 400 : 0}px`,
                   left: `${data ? data.coordinateX * 400 : 0}px`,
                 }}
-                className="absolute  w-1 h-1 bg-black rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute w-1 h-1 bg-black rounded-full transform -translate-x-1/2 -translate-y-1/2"
               />
             </div>
             <div className="mt-4">
-              <Radio.Group
-                onChange={handleLabelSelection}
-                value={selectedLabel}
+              <Checkbox.Group
+                onChange={(values) => setSelectedLabel(values.map(String))}
+                value={selectedLabel?.map(String)}
               >
-                <Radio value="inside">Inside</Radio>
-                <Radio value="near">Near</Radio>
-                <Radio value="front">Front</Radio>
-                <Radio value="far">Far</Radio>
-                <Radio value="back">Back</Radio>
-              </Radio.Group>
+                {answerOptions.map((option) => (
+                  <Checkbox key={option} value={option}>
+                    {option}
+                  </Checkbox>
+                ))}
+              </Checkbox.Group>
             </div>
+
             <div className="mt-4">
-              <Button onClick={handleSubmit} disabled={!selectedLabel}>
+              <Button
+                onClick={handleSubmit}
+                disabled={selectedLabel?.length === 0}
+              >
                 Submit
               </Button>
             </div>

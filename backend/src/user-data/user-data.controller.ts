@@ -55,10 +55,15 @@ export class UserDataController {
 
   @Post('mark-as-labelled')
   async markAsLabelled(
-    @Body() data: { answer: string; userId: string; dataId: string },
+    @Body()
+    data: {
+      answers: string[];
+      userId: string;
+      dataId: string;
+    },
   ): Promise<UserData> {
     return this.userDataService.markAsLabelled(
-      data.answer,
+      data.answers,
       data.userId,
       data.dataId,
     );
@@ -66,10 +71,15 @@ export class UserDataController {
 
   @Post('update-answer')
   async updateAnswer(
-    @Body() data: { answer: string; userId: string; dataId: string },
+    @Body()
+    data: {
+      answers: string[];
+      userId: string;
+      dataId: string;
+    },
   ): Promise<UserData> {
     return this.userDataService.updateAnswer(
-      data.answer,
+      data.answers,
       data.userId,
       data.dataId,
     );
