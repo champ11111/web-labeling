@@ -9,14 +9,15 @@ import {
 } from "@/api/user-data";
 import { useAtom } from "jotai";
 import Navbar from "@/components/navbar";
-import { UserData, dataAtom } from "@/atom/data-atom";
+import { UserData, dataAtom, DataItem } from "@/atom/data-atom";
 import { useRouter } from "next/navigation";
-import { getMe } from "@/api/user";
-import ManIcon from "@mui/icons-material/Man";
+import { getMe, getUnlabelledDataByUsername } from "@/api/user";
 
 const LabelPage: React.FC = () => {
   const router = useRouter();
-  const [selectedLabel, setSelectedLabel] = useState<string[]>([]);
+  const defaultSelectedLabel = ["no", "no", "no", "no"];
+  const [selectedLabel, setSelectedLabel] =
+    useState<string[]>(defaultSelectedLabel);
   const [userId, setUserId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
@@ -29,7 +30,14 @@ const LabelPage: React.FC = () => {
     answers: [],
   });
 
-  const answerOptions = ["inside", "near", "front", "far", "back"];
+  const answerOptions = ["inside", "near", "far", "front"];
+  const handleOptionChange = (optionIndex: number, value: string) => {
+    setSelectedLabel((prevSelected) => {
+      const newSelected = [...prevSelected];
+      newSelected[optionIndex] = value;
+      return newSelected;
+    });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,9 +60,19 @@ const LabelPage: React.FC = () => {
         user.data.id,
         data ? data.id : ""
       );
+
       setUserData(userData.data);
       if (userData.data.isLabelled) {
-        setSelectedLabel(userData.data.answers);
+        userData.data.answers.forEach((answer: string) => {
+          const index = answerOptions.indexOf(answer);
+          if (index !== -1) {
+            setSelectedLabel((prevSelected) => {
+              const newSelected = [...prevSelected];
+              newSelected[index] = "yes";
+              return newSelected;
+            });
+          }
+        });
       }
       setIsLoading(false);
     } catch (error) {
@@ -68,17 +86,38 @@ const LabelPage: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
+      console.log("submit");
       if (data) {
-        if (userData.isLabelled) {
-          await changeAnswer(selectedLabel, userId, data.id);
-        } else {
-          await markAsLabelled(selectedLabel, userId, data.id);
+        let labelAnswers: string[] = [];
+        for (let i = 0; i < selectedLabel.length; i++) {
+          if (selectedLabel[i] === "yes") {
+            labelAnswers.push(answerOptions[i]);
+          }
         }
-        router.push("/data");
+
+        if (userData.isLabelled) {
+          await changeAnswer(labelAnswers, userId, data.id);
+          router.push("/data");
+        } else {
+          await markAsLabelled(labelAnswers, userId, data.id);
+          const unlabelledData = (await getUnlabelledDataByUsername(username))
+            .data;
+          if (unlabelledData.length > 0) {
+            setData(unlabelledData[0]);
+            setSelectedLabel(defaultSelectedLabel);
+            router.push("/label");
+          } else {
+            router.push("/data");
+          }
+        }
       }
     } catch (error) {
       console.error("Failed to submit label:", error);
     }
+  };
+
+  const handleBackClick = () => {
+    router.push("/data");
   };
 
   return (
@@ -89,6 +128,7 @@ const LabelPage: React.FC = () => {
           <Spin />
         ) : (
           <>
+            <Button onClick={handleBackClick}>Back</Button>
             <div className="relative">
               <img
                 src={data?.url}
@@ -98,33 +138,29 @@ const LabelPage: React.FC = () => {
                 className="block w-[400px] h-[400px] object-cover border border-gray-300 "
               />
 
-              <ManIcon
-                style={{
-                  top: `${data ? data.coordinateY * 400 : 0}px`,
-                  left: `${data ? data.coordinateX * 400 : 0}px`,
-                }}
-                fontSize="large"
-                className="absolute text-emerald-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
-              />
               <div
                 style={{
                   top: `${data ? data.coordinateY * 400 : 0}px`,
                   left: `${data ? data.coordinateX * 400 : 0}px`,
                 }}
-                className="absolute w-1 h-1 bg-black rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute w-2 h-2 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"
               />
             </div>
-            <div className="mt-4">
-              <Checkbox.Group
-                onChange={(values) => setSelectedLabel(values.map(String))}
-                value={selectedLabel?.map(String)}
-              >
-                {answerOptions.map((option) => (
-                  <Checkbox key={option} value={option}>
-                    {option}
-                  </Checkbox>
-                ))}
-              </Checkbox.Group>
+            <div className="mt-4 flex flex-col">
+              {answerOptions.map((option, index) => (
+                // eslint-disable-next-line react/jsx-key
+                <div className="flex flex-row border-b-2 my-2 p-1">
+                  <div className="pr-6 w-16">{option}</div>
+                  <Radio.Group
+                    key={option}
+                    onChange={(e) => handleOptionChange(index, e.target.value)}
+                    value={selectedLabel[index]}
+                  >
+                    <Radio value="yes">Yes</Radio>
+                    <Radio value="no">No</Radio>
+                  </Radio.Group>
+                </div>
+              ))}
             </div>
 
             <div className="mt-4">
