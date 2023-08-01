@@ -8,7 +8,7 @@ import {
   Patch,
   Req,
 } from '@nestjs/common';
-import { User, Prisma, Data } from '@prisma/client';
+import { User, Prisma, Data, RedeemCode } from '@prisma/client';
 
 import { UserService } from './user.service';
 import { Request } from 'express';
@@ -34,6 +34,13 @@ export class UserController {
     if (!accessToken) throw new Error('Access token not found');
     const res = await this.authService.verifyToken(accessToken);
     return this.userService.getMe(res.userId);
+  }
+
+  @Get('/redeem-code/:userId')
+  async getRedeemCode(
+    @Param('userId') userId: string,
+  ): Promise<RedeemCode[] | null> {
+    return this.userService.getRedeemCodeByUserId(userId);
   }
 
   @Get(':id')

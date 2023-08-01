@@ -33,6 +33,31 @@ export class UserDataService {
     return this.prisma.userData.delete({ where: { id } });
   }
 
+  generateRandomString(): string {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+
+    let randomString = '';
+
+    // Generate two random letters
+    for (let i = 0; i < 2; i++) {
+      const randomLetter = letters.charAt(
+        Math.floor(Math.random() * letters.length),
+      );
+      randomString += randomLetter;
+    }
+
+    // Generate five random numbers
+    for (let i = 0; i < 5; i++) {
+      const randomNumber = numbers.charAt(
+        Math.floor(Math.random() * numbers.length),
+      );
+      randomString += randomNumber;
+    }
+
+    return randomString;
+  }
+
   async markAsLabelled(
     answers: string[],
     userId: string,
@@ -46,13 +71,31 @@ export class UserDataService {
       throw new Error('Data is already labelled');
     }
 
-    return this.prisma.userData.update({
+    const userDateUpdated = await this.prisma.userData.update({
       where: { id: userData.id },
       data: {
         isLabelled: true,
         answers,
       },
     });
+
+    //count user data labelled
+    const countUserDataLabelled = await this.prisma.userData.count({
+      where: { userId, isLabelled: true },
+    });
+
+    if (countUserDataLabelled > 0 && countUserDataLabelled % 50 === 0) {
+      const redeemCode = this.generateRandomString();
+
+      await this.prisma.redeemCode.create({
+        data: {
+          userId,
+          code: redeemCode,
+        },
+      });
+    }
+
+    return userDateUpdated;
   }
 
   async updateAnswer(

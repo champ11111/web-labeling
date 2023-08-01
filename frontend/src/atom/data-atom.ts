@@ -20,4 +20,10 @@ export interface UserData {
   answers: string[];
 }
 
+export interface RedeemCode {
+  code: string;
+  userId: string;
+  createdAt: Date;
+}
+
 export const dataAtom = atom<DataItem | undefined>(undefined);

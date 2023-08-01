@@ -27,3 +27,7 @@ export const getUnlabelledDataByUsername = (username: string) => {
 export const getMe = () => {
   return api.get(`/users/me`);
 };
+
+export const getRedeemCode = (userId: string) => {
+  return api.get(`/users/redeem-code/${userId}`);
+};

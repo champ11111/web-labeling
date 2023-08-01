@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  username  String     @unique
-  password  String
-  userData  UserData[]
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
+  id         String       @id @default(cuid())
+  username   String       @unique
+  password   String
+  userData   UserData[]
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  RedeemCode RedeemCode[]
 
   @@map("user")
 }
@@ -56,6 +57,15 @@ model DataSet {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("data_set")
+}
+
+model RedeemCode {
+  code      String   @id
+  createdAt DateTime @default(now()) @map("created_at")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("redeem_code")
 }
 
 enum AnswerType {

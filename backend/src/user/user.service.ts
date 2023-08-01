@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User, Prisma, Data } from '@prisma/client';
+import { User, Prisma, Data, RedeemCode } from '@prisma/client';
 
 import { PrismaService } from 'src/libs/prisma/prisma.service';
 
@@ -70,5 +70,13 @@ export class UserService {
     }
 
     return { id: user.id, username: user.username };
+  }
+
+  async getRedeemCodeByUserId(userId: string): Promise<RedeemCode[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: userId },
+      })
+      .RedeemCode();
   }
 }

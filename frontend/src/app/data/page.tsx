@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Table, Button, Card, Divider, Typography, Spin } from "antd";
+import { Table, Button, Card, Divider, Typography, Spin, Modal } from "antd";
 import {
   getLabelledDataByUsername,
   getMe,
+  getRedeemCode,
   getUnlabelledDataByUsername,
 } from "@/api/user";
 import Navbar from "@/components/navbar";
 import { useAtom } from "jotai";
-import { DataItem, dataAtom } from "@/atom/data-atom";
+import { DataItem, RedeemCode, dataAtom } from "@/atom/data-atom";
 import moment from "moment";
 import { ColumnType } from "antd/lib/table";
 
@@ -26,6 +27,20 @@ const DataPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [redeemCodes, setRedeemCodes] = useState<RedeemCode[]>([]);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -50,6 +65,9 @@ const DataPage: React.FC = () => {
 
         const labelledData = await getLabelledDataByUsername(res.data.username);
         setLabelledData(labelledData.data);
+
+        const redeemCodes = await getRedeemCode(res.data.id);
+        setRedeemCodes(redeemCodes.data);
 
         setIsLoading(false);
       } catch {
@@ -179,6 +197,22 @@ const DataPage: React.FC = () => {
       <div>
         <Navbar username={username} />
         <Card className="flex justify-center items-center p-8 rounded-none">
+          <>
+            <Button onClick={showModal}>Redeem Code</Button>
+            <Modal
+              title="Redeem Code"
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              okButtonProps={{
+                style: { backgroundColor: "#1890ff", borderColor: "#1890ff" },
+              }}
+            >
+              {redeemCodes.map((redeemCode) => (
+                <p key={redeemCode.code}>{redeemCode.code}</p>
+              ))}
+            </Modal>
+          </>
           <div className="text-center mb-6">
             <Title level={4}>Unlabelled Data</Title>
           </div>
