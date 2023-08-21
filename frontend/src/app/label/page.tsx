@@ -9,15 +9,16 @@ import {
 } from "@/api/user-data";
 import { useAtom } from "jotai";
 import Navbar from "@/components/navbar";
-import { UserData, dataAtom, DataItem } from "@/atom/data-atom";
+import { UserData, dataAtom, unlabelledDataAtom } from "@/atom/data-atom";
 import { useRouter } from "next/navigation";
-import { getMe, getUnlabelledDataByUsername } from "@/api/user";
+import { getMe } from "@/api/user";
 
 const LabelPage: React.FC = () => {
   const router = useRouter();
   const defaultSelectedLabel = ["no", "no", "no", "no"];
   const [selectedLabel, setSelectedLabel] =
     useState<string[]>(defaultSelectedLabel);
+  const [unlabelledData, setUnlabelledData] = useAtom(unlabelledDataAtom);
   const [userId, setUserId] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
@@ -100,12 +101,16 @@ const LabelPage: React.FC = () => {
           router.push("/data");
         } else {
           await markAsLabelled(labelAnswers, userId, data.id);
-          const unlabelledData = (await getUnlabelledDataByUsername(username))
-            .data;
-          if (unlabelledData.length > 0) {
-            setData(unlabelledData[0]);
+
+          // remove data from unlabelled data
+          const newUnlabelledData = unlabelledData.filter(
+            (d) => d.id !== data.id
+          );
+          setUnlabelledData(newUnlabelledData);
+          if (newUnlabelledData.length > 0) {
+            setData(newUnlabelledData[0]);
             setSelectedLabel(defaultSelectedLabel);
-            router.push("/label");
+            // router.push("/label");
           } else {
             router.push("/data");
           }

@@ -10,7 +10,12 @@ import {
 } from "@/api/user";
 import Navbar from "@/components/navbar";
 import { useAtom } from "jotai";
-import { DataItem, RedeemCode, dataAtom } from "@/atom/data-atom";
+import {
+  DataItem,
+  RedeemCode,
+  dataAtom,
+  unlabelledDataAtom,
+} from "@/atom/data-atom";
 import moment from "moment";
 import { ColumnType } from "antd/lib/table";
 
@@ -22,10 +27,11 @@ const paginationConfig = {
 
 const DataPage: React.FC = () => {
   const router = useRouter();
-  const [unlabelledData, setUnlabelledData] = useState<DataItem[]>([]);
+  const [unlabelledData, setUnlabelledData] = useAtom(unlabelledDataAtom);
   const [labelledData, setLabelledData] = useState<DataItem[]>([]);
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [redeemCodes, setRedeemCodes] = useState<RedeemCode[]>([]);

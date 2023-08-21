@@ -27,3 +27,5 @@ export interface RedeemCode {
 }
 
 export const dataAtom = atom<DataItem | undefined>(undefined);
+
+export const unlabelledDataAtom = atom<DataItem[]>([]);
