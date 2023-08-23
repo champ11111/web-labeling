@@ -84,8 +84,8 @@ export class UserDataService {
       where: { userId, isLabelled: true },
     });
 
-    if (countUserDataLabelled > 0 && countUserDataLabelled % 50 === 0) {
-      const redeemCode = this.generateRandomString();
+    if (countUserDataLabelled > 0 && countUserDataLabelled === 30) {
+      const redeemCode = 'CLT5YFTN';
 
       await this.prisma.redeemCode.create({
         data: {

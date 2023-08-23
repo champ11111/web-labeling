@@ -15,6 +15,7 @@ model User {
   createdAt  DateTime     @default(now()) @map("created_at")
   updatedAt  DateTime     @updatedAt @map("updated_at")
   RedeemCode RedeemCode[]
+  isMapped   Boolean      @default(false) @map("is_mapped")
 
   @@map("user")
 }

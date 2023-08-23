@@ -133,7 +133,7 @@ const LabelPage: React.FC = () => {
           <Spin />
         ) : (
           <>
-            <Button onClick={handleBackClick}>Back</Button>
+            <Button onClick={handleBackClick}>Main Page</Button>
             <div className="relative">
               <img
                 src={data?.url}

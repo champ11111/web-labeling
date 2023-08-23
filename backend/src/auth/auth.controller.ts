@@ -29,6 +29,20 @@ export class AuthController {
     }
   }
 
+  @Post('map')
+  async map(
+    @Body() registerDto: RegisterDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    try {
+      const data = await this.authService.mapUser(registerDto);
+      res.cookie('access_token', data.accessToken, { httpOnly: true });
+      return data.accessToken;
+    } catch (error) {
+      throw new BadRequestException('Failed to register user');
+    }
+  }
+
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(

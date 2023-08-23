@@ -6,7 +6,7 @@ interface RegisterData {
 }
 
 export const register = ({ username, password }: RegisterData) => {
-  return api.post("/auth/register", {
+  return api.post("/auth/map", {
     username,
     password,
   });

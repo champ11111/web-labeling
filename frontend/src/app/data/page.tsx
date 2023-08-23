@@ -48,6 +48,15 @@ const DataPage: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const onStartLabelingClickHandler = () => {
+    if (unlabelledData?.length > 0) {
+      setData(unlabelledData[0]);
+      router.push("/label");
+    } else {
+      alert("No more data to label.");
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!localStorage.getItem("isLogin")) {
@@ -94,102 +103,102 @@ const DataPage: React.FC = () => {
     router.push("/label");
   };
 
-  const unlabelledDataColumns: ColumnType<DataItem>[] = [
-    { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
-    {
-      title: "URL",
-      dataIndex: "url",
-      key: "url",
-      width: "20%",
-      render: (url: string) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={url} width={100} height={100} alt="Unlabelled Image" />
-      ),
-    },
-    {
-      title: "Coordinate X",
-      dataIndex: "coordinateX",
-      key: "coordinateX",
-      width: "5%",
-    },
-    {
-      title: "Coordinate Y",
-      dataIndex: "coordinateY",
-      key: "coordinateY",
-      width: "5%",
-    },
-    {
-      title: "Created At",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      width: "20%",
-      render: (createdAt: string) =>
-        moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-    },
-    {
-      title: "Updated At",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      width: "20%",
-      render: (updatedAt: string) =>
-        moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
-    },
-    {
-      title: "Action",
-      key: "action",
-      width: "20%",
-      render: (data: DataItem) => (
-        <Button type="link" onClick={() => handleLabelData(data)}>
-          Label
-        </Button>
-      ),
-    },
-  ];
+  // const unlabelledDataColumns: ColumnType<DataItem>[] = [
+  //   { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
+  //   {
+  //     title: "URL",
+  //     dataIndex: "url",
+  //     key: "url",
+  //     width: "20%",
+  //     render: (url: string) => (
+  //       // eslint-disable-next-line @next/next/no-img-element
+  //       <img src={url} width={100} height={100} alt="Unlabelled Image" />
+  //     ),
+  //   },
+  //   {
+  //     title: "Coordinate X",
+  //     dataIndex: "coordinateX",
+  //     key: "coordinateX",
+  //     width: "5%",
+  //   },
+  //   {
+  //     title: "Coordinate Y",
+  //     dataIndex: "coordinateY",
+  //     key: "coordinateY",
+  //     width: "5%",
+  //   },
+  //   {
+  //     title: "Created At",
+  //     dataIndex: "createdAt",
+  //     key: "createdAt",
+  //     width: "20%",
+  //     render: (createdAt: string) =>
+  //       moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+  //   },
+  //   {
+  //     title: "Updated At",
+  //     dataIndex: "updatedAt",
+  //     key: "updatedAt",
+  //     width: "20%",
+  //     render: (updatedAt: string) =>
+  //       moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+  //   },
+  //   {
+  //     title: "Action",
+  //     key: "action",
+  //     width: "20%",
+  //     render: (data: DataItem) => (
+  //       <Button type="link" onClick={() => handleLabelData(data)}>
+  //         Label
+  //       </Button>
+  //     ),
+  //   },
+  // ];
 
   const labelledDataColumns: ColumnType<DataItem>[] = [
-    { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
+    // { title: "Data Id", dataIndex: "title", key: "title", width: "10%" },
     {
       title: "Image",
       dataIndex: "url",
       key: "url",
-      width: "20%",
+      width: "50%",
       render: (url: string) => (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={url} width={100} height={100} alt="Labelled Image" />
+        <img src={url} width={200} height={200} alt="Labelled Image" />
       ),
     },
-    {
-      title: "Coordinate X",
-      dataIndex: "coordinateX",
-      key: "coordinateX",
-      width: "5%",
-    },
-    {
-      title: "Coordinate Y",
-      dataIndex: "coordinateY",
-      key: "coordinateY",
-      width: "5%",
-    },
-    {
-      title: "Created At",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      width: "20%",
-      render: (createdAt: string) =>
-        moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
-    },
-    {
-      title: "Updated At",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      width: "20%",
-      render: (updatedAt: string) =>
-        moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
-    },
+    // {
+    //   title: "Coordinate X",
+    //   dataIndex: "coordinateX",
+    //   key: "coordinateX",
+    //   width: "5%",
+    // },
+    // {
+    //   title: "Coordinate Y",
+    //   dataIndex: "coordinateY",
+    //   key: "coordinateY",
+    //   width: "5%",
+    // },
+    // {
+    //   title: "Created At",
+    //   dataIndex: "createdAt",
+    //   key: "createdAt",
+    //   width: "20%",
+    //   render: (createdAt: string) =>
+    //     moment(createdAt).format("YYYY-MM-DD HH:mm:ss"),
+    // },
+    // {
+    //   title: "Updated At",
+    //   dataIndex: "updatedAt",
+    //   key: "updatedAt",
+    //   width: "20%",
+    //   render: (updatedAt: string) =>
+    //     moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+    // },
     {
       title: "Action",
       key: "action",
-      width: "20%",
+      width: "50%",
       render: (data: DataItem) => (
         <Button type="link" onClick={() => handleEditLabelData(data)}>
           Edit Label
@@ -204,7 +213,19 @@ const DataPage: React.FC = () => {
         <Navbar username={username} />
         <Card className="flex justify-center items-center p-8 rounded-none">
           <>
-            <Button onClick={showModal}>Redeem Code</Button>
+            <div className="flex justify-between relative items-end">
+              <Button onClick={showModal}>Redeem Code</Button>
+              <div className="flex flex-col">
+                <span>{labelledData.length}/30 labeled data</span>
+                <Button
+                  className="bg-blue-500"
+                  type="primary"
+                  onClick={onStartLabelingClickHandler}
+                >
+                  Start Labeling
+                </Button>
+              </div>
+            </div>
             <Modal
               title="Redeem Code"
               open={isModalOpen}
@@ -219,7 +240,7 @@ const DataPage: React.FC = () => {
               ))}
             </Modal>
           </>
-          <div className="text-center mb-6">
+          {/* <div className="text-center mb-6">
             <Title level={4}>Unlabelled Data</Title>
           </div>
           {isLoading ? (
@@ -233,10 +254,10 @@ const DataPage: React.FC = () => {
             />
           )}
 
-          <Divider />
+          <Divider /> */}
 
           <div className="text-center mt-6">
-            <Title level={4}>Labelled Data</Title>
+            <Title level={4}>Labeled Data</Title>
           </div>
           {isLoading ? (
             <Spin />

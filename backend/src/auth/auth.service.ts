@@ -28,6 +28,38 @@ export class AuthService {
     return { accessToken };
   }
 
+  async mapUser(
+    data: Prisma.UserCreateInput,
+  ): Promise<{ accessToken: string }> {
+    const userList = await this.prisma.user.findMany({
+      where: { isMapped: false },
+    });
+
+    if (userList && userList.length === 0) {
+      throw new UnauthorizedException('No user to map');
+    }
+
+    const mappedUser = await this.prisma.user.findUnique({
+      where: { username: data.username },
+    });
+
+    if (mappedUser) {
+      throw new UnauthorizedException('User already mapped');
+    }
+
+    const hashedPassword = await this.hashPassword(data.password);
+
+    const user = await this.prisma.user.update({
+      where: { id: userList[0].id },
+      data: { ...data, password: hashedPassword, isMapped: true },
+    });
+
+    const payload = { userId: user.id };
+    const accessToken = this.jwtService.sign(payload);
+
+    return { accessToken };
+  }
+
   async loginUser(
     username: string,
     password: string,

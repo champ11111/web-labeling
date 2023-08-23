@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Form, Input, Button, Alert } from "antd";
 import { register } from "@/api/auth";
 import { useRouter } from "next/navigation";
+import InstructionButton from "@/components/instruction-button";
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
@@ -16,6 +17,11 @@ const RegisterPage: React.FC = () => {
       if (values.password.length < 6) {
         throw new Error("Password should be at least 6 characters long.");
       }
+
+      if (values.username !== values.password) {
+        throw new Error("Username and password should be the same.");
+      }
+
       await register(values);
       localStorage.setItem("isLogin", "true");
       router.push("/data");
@@ -40,6 +46,9 @@ const RegisterPage: React.FC = () => {
         className="bg-white shadow-md rounded px-8 py-6"
         style={{ width: 300 }}
       >
+        <div className="mb-4 flex justify-end ">
+          <InstructionButton />
+        </div>
         {registrationError && (
           <Alert
             message={registrationError}
@@ -53,7 +62,7 @@ const RegisterPage: React.FC = () => {
           rules={[{ required: true, message: "Please enter your username!" }]}
         >
           <Input
-            placeholder="Username"
+            placeholder="Username (Prolific ID)"
             className="border rounded w-full py-2 px-3"
           />
         </Form.Item>
@@ -68,7 +77,7 @@ const RegisterPage: React.FC = () => {
           ]}
         >
           <Input.Password
-            placeholder="Password"
+            placeholder="Password (Prolific ID)"
             className="border rounded w-full py-2 px-3"
           />
         </Form.Item>
