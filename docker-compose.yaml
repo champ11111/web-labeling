@@ -13,38 +13,38 @@ services:
     ports:
       - 5432:5432
 
-  backend:
-    build: ./backend
-    image: champkub6/weblabeling-backend
-    restart: always
-    ports:
-      - 8000:${SERVER_PORT}
-    depends_on:
-      - database
-    environment:
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
-      FRONTEND_URL: ${FRONTEND_URL}
+  # backend:
+  #   build: ./backend
+  #   image: champkub6/weblabeling-backend
+  #   restart: always
+  #   ports:
+  #     - 8000:${SERVER_PORT}
+  #   depends_on:
+  #     - database
+  #   environment:
+  #     DATABASE_HOST: ${DATABASE_HOST}
+  #     DATABASE_USERNAME: ${DATABASE_USERNAME}
+  #     DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+  #     DATABASE_NAME: ${DATABASE_NAME}
+  #     DATABASE_PORT: ${DATABASE_PORT}
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     FRONTEND_URL: ${FRONTEND_URL}
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: dockerfile
-      args:
-        - NEXT_PUBLIC_SERVER_URL=http://54.215.101.18:8000
-    image: champkub6/weblabeling-frontend
-    restart: always
-    ports:
-      - 3000:3000
-    depends_on:
-      - backend
-    environment:
-      NEXT_PUBLIC_SERVER_URL: http://54.215.101.18:8000
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: dockerfile
+  #     args:
+  #       - NEXT_PUBLIC_SERVER_URL=http://54.215.101.18:8000
+  #   image: champkub6/weblabeling-frontend
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     NEXT_PUBLIC_SERVER_URL: http://54.215.101.18:8000
 
 volumes:
   database-storage:

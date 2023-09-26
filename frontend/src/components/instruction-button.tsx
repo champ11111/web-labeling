@@ -1,5 +1,7 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const InstructionButton: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -12,6 +14,24 @@ const InstructionButton: React.FC = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const [isSectionOneOpen, setIsSectionOneOpen] = useState(false);
+
+  const handleSectionOneClick = () => {
+    setIsSectionOneOpen((prev) => !prev);
+  };
+
+  const [isSectionTwoOpen, setIsSectionTwoOpen] = useState(false);
+
+  const handleSectionTwoClick = () => {
+    setIsSectionTwoOpen((prev) => !prev);
+  };
+
+  const [isSectionThreeOpen, setIsSectionThreeOpen] = useState(false);
+
+  const handleSectionThreeClick = () => {
+    setIsSectionThreeOpen((prev) => !prev);
   };
 
   return (
@@ -32,182 +52,510 @@ const InstructionButton: React.FC = () => {
         </div>
         <div className="text-left text-sm">
           <div className="mt-1 mb-2">
-            <h2 className="text-xl font-semibold">For Login & Registration</h2>
-            <h3 className="text-base font-semibold">
-              Use your Prolific ID to register and login as both username and
-              password.
-            </h3>
-            <h3 className="text-base font-semibold">
-              Username:<a className="font-normal text-sm">[your Prolific ID]</a>
-            </h3>
-            <h3 className="text-base font-semibold">
-              Password:<a className="font-normal text-sm">[your Prolific ID]</a>
-            </h3>
-          </div>
-          <h2 className="text-xl font-semibold mb-2">Task description</h2>
-          <div className="mb-2">
-            <h3 className="text-base font-semibold">What to Do:</h3>
-            <p>Look at pictures of maps that show landmarks and people.</p>
-          </div>
-          <div className="mb-2">
-            <h3 className="text-base font-semibold">Picture Details:</h3>
-            <ul>
-              <li>Map Size: 400x400 meters squared</li>
-              <li>Interested Landmark: Light blue landmark</li>
-              <li>People: Red dot (where people are)</li>
-              <li>
-                Landmark Entrances: Black rectangles (doors of the landmark)
-              </li>
-              <li>Other Places: Gray areas (surrounding spots)</li>
-              <li>Roads: Light yellow paths (where cars go)</li>
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="text-base font-semibold">Your Job:</h3>
-            <p>
-              Figure out where the person (red dot) is compared to the
-              interested landmark (blue spot).
-            </p>
-          </div>
-          <div className="mb-2">
-            <h3 className="text-base font-semibold">
-              Choices (Multiple answers are allowed):
-            </h3>
-            <ul className="ml-2">
-              <li> - Front (in front of the interested landmark)</li>
-              <li> - Near (close to the interested landmark)</li>
-              <li> - Far (away from the interested landmark)</li>
-              <li> - Inside (inside the interested landmark)</li>
-            </ul>
-          </div>
-          <div className="mb-2">
-            <h3 className="text-base font-semibold">How to Answer:</h3>
-            <p>
-              Find where the person is on the map compared to the interested
-              landmark.
-              <span className="font-bold">
-                There can be more than one answer at the same time.
-              </span>
-              For example, the person might be {`"`}Near{`"`} an interested
-              landmark and also {`"`}Front{`"`} of it if they{`'`}re close to
-              the door. So, you can choose both {`"`}Near{`"`} and {`"`}Front
-              {`"`} as your answer.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110318499840020/image.png?width=628&height=1062"
-              alt="Map Example"
-              width={300}
-              height={600}
-            ></img>
-          </div>
-          <div className="mb-4">
-            <p>In this example, the person is inside the building.</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110387764564038/image.png?width=610&height=1068"
-              alt="Map Example"
-              width={300}
-              height={600}
-            ></img>
-          </div>
-          <div className="mb-4">
-            <h3 className="text-base font-semibold">After finish 30 images:</h3>
-            <p>
-              Go back to the first page and click the {`"`}Redeem Code{`"`}{" "}
-              button (on the top left) to receive a redeem code.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1018798909734264866/1143229746839298219/image.png?width=2160&height=606"
-              alt="Map Example"
-              width={800}
-              height={800}
-            ></img>
+            <Button
+              className="text-xl font-semibold border-none"
+              onClick={handleSectionOneClick}
+            >
+              I.{`)`} Task Details{" "}
+              {isSectionOneOpen ? (
+                <KeyboardArrowDownIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Button>
+            {isSectionOneOpen && (
+              <div className="ml-8">
+                <h3 className="text-base font-normal mb-2">
+                  Please read this instruction carefully.
+                </h3>
+                <h3 className="text-base font-normal mb-2">
+                  Imagine a robot running around looking for a person or an
+                  object (such as a bag). Our goal is to help the robot find
+                  what it is looking for by providing it with descriptions of
+                  where the person or the object is.
+                </h3>
+                <h3 className="text-base font-normal mb-2">
+                  You will be presented with map images, each of which shows the
+                  location of the person or the object that the robot is looking
+                  for.
+                </h3>
+                <h3 className="text-base font-normal">
+                  <a className="font-semibold ">Your task: </a>
+                  To help the robot, please answer multiple choice questions (
+                  {"‘"}Yes{"’"} or {"‘"}No{"’"}) whether you would use the
+                  spatial relations listed (such as “in front of,” “near,” etc.)
+                  to describe the location of{" "}
+                  <a className="font-semibold text-red-500">
+                    the person or object
+                  </a>{" "}
+                  marked with a
+                  <a className="font-semibold text-red-500"> small red dot</a>{" "}
+                  with respect to the{" "}
+                  <a className="font-semibold text-blue-400">building</a>{" "}
+                  highlighted in{" "}
+                  <a className="font-semibold text-blue-400">blue </a>(example
+                  as shown below).
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1148675244324823080/image.png?width=592&height=1064"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                />
+
+                <h2 className="text-xl font-semibold mb-2 mt-2">
+                  Map legend & context information:
+                </h2>
+                <h3 className="text-base font-normal">
+                  - A building <a className="font-semibold">entrance</a> is
+                  indicated by a <a className="font-semibold">black mark (-)</a>{" "}
+                  on the building. In the example above, there are 2 entrances
+                  to the highlighted building.
+                </h3>
+                <h3 className="text-base font-normal">
+                  - <a className="font-semibold text-yellow-400">Roads</a> are
+                  shaded <a className="font-semibold text-yellow-400">yellow</a>
+                  .
+                </h3>
+                <h3 className="text-base font-normal">
+                  -{" "}
+                  <a className="font-semibold text-gray-400">
+                    Other buildings and sites
+                  </a>{" "}
+                  are shaded in{" "}
+                  <a className="font-semibold text-gray-400"> gray</a>.
+                </h3>
+                <h3 className="text-base font-normal">
+                  - The scale bar indicates 30 meters (98 feet), which is
+                  equivalent to the length of 3 school buses.
+                </h3>
+                <h3 className="text-base font-normal">
+                  - The robot (not shown on the map) is typically about the same
+                  size as a human or smaller.
+                </h3>
+
+                <h3 className="text-base font-normal mb-2 mt-2">
+                  <a className="font-semibold">Note:</a> There could be{" "}
+                  <a className="underline">more than one</a> way to describe a
+                  location.
+                </h3>
+                <h3 className="text-base font-normal mb-2">
+                  For example, in the above image, the person / object can be
+                  described as{" "}
+                  <a className="font-semibold">
+                    {"“"}near{"”"}
+                  </a>{" "}
+                  the building, as well as{" "}
+                  <a className="font-semibold">
+                    {"“"}in front of{"”"}
+                  </a>{" "}
+                  the building. However, it cannot be described as{" "}
+                  <a className="font-semibold">
+                    {"“"}in,{"”"}
+                  </a>{" "}
+                  or{" "}
+                  <a className="font-semibold">
+                    {"“"}far from{"”"}
+                  </a>{" "}
+                  the building. Therefore, please answer{" "}
+                  <a className="font-semibold">
+                    {"“"}Yes{"”"}
+                  </a>{" "}
+                  for <a className="underline">both</a>{" "}
+                  <a className="font-semibold">
+                    {"“"}
+                    near{"”"}
+                  </a>{" "}
+                  and{""}{" "}
+                  <a className="font-semibold">
+                    {"“"}in front of,{"”"}
+                  </a>{" "}
+                  and answer{" "}
+                  <a className="font-semibold">
+                    {"“"}No{"”"}
+                  </a>{" "}
+                  for{" "}
+                  <a className="font-semibold">
+                    {"“"}in{"”"}
+                  </a>{" "}
+                  and{" "}
+                  <a className="font-semibold">
+                    {"“"}far from.{"”"}
+                  </a>
+                </h3>
+
+                <h3 className="text-base font-normal">
+                  <a className="font-semibold ">More examples:</a>
+                </h3>
+                <h3 className="text-base font-normal ml-4">
+                  1. In this example, the person / object can be described as{" "}
+                  <a className="font-semibold">
+                    {"“"}
+                    near{"”"}
+                  </a>{" "}
+                  as well as{" "}
+                  <a className="font-semibold">
+                    {"“"}in front of{"”"}
+                  </a>{" "}
+                  the building.
+                </h3>
+                <h3 className="text-base font-normal ml-4 text-indigo-600">
+                  <a className="underline">Explanation</a>: To determine if a
+                  person / object is{" "}
+                  <a className="font-semibold">
+                    {"“"}in front of{"”"}
+                  </a>{" "}
+                  or{" "}
+                  <a className="font-semibold">
+                    {"“"}
+                    behind{"”"}
+                  </a>{" "}
+                  a building, we usually consider their location relative to the{" "}
+                  <a className="font-semibold">entrances</a> of the building.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1151039395437223986/image.png?width=696&height=1074"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                />
+
+                <h3 className="text-base font-normal ml-4 mt-2">
+                  2. In this example, the person / object can only be described
+                  as{" "}
+                  <a className="font-semibold">
+                    {"“"}far from{"”"}
+                  </a>{" "}
+                  the building.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1150761986729197628/image.png?width=678&height=1056"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                />
+
+                <h3 className="text-base font-normal ml-4 mt-2">
+                  3. In this example, the person / object can be described as{" "}
+                  <a className="font-semibold">
+                    {"“"}in{"”"}
+                  </a>{" "}
+                  the building.
+                </h3>
+                <h3 className="text-base font-normal ml-4 text-indigo-600">
+                  <a className="underline">Explanation</a>: We usually describe
+                  the subject as{" "}
+                  <a className="font-semibold">
+                    {"“"}near{"”"}
+                  </a>{" "}
+                  the building{" "}
+                  <a className="font-semibold">
+                    only if they are {"“"}outside{"”"}
+                  </a>{" "}
+                  the building itself. Therefore, we answer{" "}
+                  <a className="font-semibold">
+                    {"“"}No{"”"}
+                  </a>{" "}
+                  for{" "}
+                  <a className="font-semibold">
+                    {"“"}near.{"”"}
+                  </a>
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1150762323624079443/image.png?width=678&height=1056"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                />
+
+                <h3 className="text-base font-normal ml-4 mt-2">
+                  4. In this example, the person / object can only be described
+                  as{" "}
+                  <a className="font-semibold">
+                    {"“"}near{"”"}
+                  </a>{" "}
+                  the building.
+                </h3>
+                <h3 className="text-base font-normal ml-4 text-indigo-600">
+                  <a className="underline">Explanation</a>: Judging by the
+                  location of the building’s{" "}
+                  <a className="font-semibold">entrance,</a> the person / object
+                  is{" "}
+                  <a className="font-semibold">
+                    {"“"}behind{"”"}
+                  </a>
+                  the building. Therefore, we answer{" "}
+                  <a className="font-semibold">
+                    {"“"}No{"”"}
+                  </a>{" "}
+                  for{" "}
+                  <a className="font-semibold">
+                    {"“"}in front of.{"”"}
+                  </a>
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1150762556655411320/image.png?width=678&height=1056"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                />
+              </div>
+            )}
           </div>
 
-          <div className="mb-2">
-            <h2 className="text-xl font-semibold">Website{`'`}s Manual</h2>
-          </div>
-          <div className="mb-2">
-            <p>
-              1. Go to{" "}
-              <a className="text-blue-400" href="http://54.215.101.18:3000/">
-                http://54.215.101.18:3000/
-              </a>
-              . Login with the given username and password.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110462146367578/image.png?width=1756&height=1062"
-              alt="Web Example"
-              width={800}
-              height={800}
-            ></img>
-          </div>
-          <div className="mb-2">
-            <p>
-              2. You will see the available images. Click on the label button to
-              enter the image.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110522082951229/image.png?width=1772&height=1062"
-              alt="Web Example"
-              width={800}
-              height={800}
-            ></img>
-          </div>
-          <div className="mb-2">
-            <p>
-              3. Once you enter the task, you will see the image and choices.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110573513510932/image.png?width=1792&height=1062"
-              alt="Web Example"
-              width={800}
-              height={800}
-            ></img>
-          </div>
-          <div className="mb-2">
-            <p>
-              4. After making your selections, click the {`"`}Submit{`"`} button
-              to proceed.
-            </p>
-          </div>
-          <div className="mb-2">
-            <p>
-              5. When you finish 50 images, go back to the first page and click
-              the {`"`}Redeem Code{`"`} button to receive a redeem code.
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://media.discordapp.net/attachments/1133782115708833933/1143110629964664962/image.png?width=2160&height=752"
-              alt="Web Example"
-              width={800}
-              height={800}
-            ></img>
-          </div>
-          <div className="mb-4">
-            <p>6. Use the given redeem code to redeem the reward.</p>
-          </div>
-        </div>
-        <div className="mb-2">
-          <h2 className="text-xl font-semibold">For editing</h2>
-        </div>
-        <div className="mb-2">
-          <p className="text-sm">
-            You can scroll down to the “Labelled Data” part to see your previous
-            submitted data, and you can click Edit Label to edit the data.
-          </p>
+          {/* <div className="mb-2">
+            <Button
+              className="text-xl font-semibold border-none"
+              onClick={handleSectionTwoClick}
+            >
+              II.{`)`} Navigating between Images{" "}
+              {isSectionTwoOpen ? (
+                <KeyboardArrowDownIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Button>
+            {isSectionTwoOpen && (
+              <div className="ml-8">
+                <h3 className="text-base font-normal mb-2">
+                  Please read this instruction carefully.
+                </h3>
+                <h3 className="text-base font-normal">
+                  You will be shown images of a map (example as shown below). In
+                  each image, please determine if each spatial relation listed
+                  correctly describes the location marked with a{" "}
+                  <a className="font-semibold text-red-500">red dot</a> with
+                  respect to the building highlighted in{" "}
+                  <a className="font-semibold text-blue-400">blue</a>.
+                </h3>
+                <h3 className="text-base font-normal"></h3> */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://media.discordapp.net/attachments/1133782115708833933/1143110685375606914/image.png?width=1738&height=1062"
-            alt="Web Example"
-            width={800}
-            height={800}
-          ></img>
+          {/* <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1144977533100638279/image.png?width=636&height=1064"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                ></img>
+                <div className="mb-2">
+                  <h2 className="text-xl font-semibold mb-2">Map legend:</h2>
+                  <h3 className="text-base font-normal">
+                    - A building entrance is indicated by a{" "}
+                    <a className="font-semibold">black mark (-)</a> on the
+                    building. In the example above, there are 2 entrances to the
+                    highlighted building.
+                  </h3>
+                  <h3 className="text-base font-normal">
+                    - Roads are shaded{" "}
+                    <a className="font-semibold text-yellow-400">yellow</a> .
+                  </h3>
+                  <h3 className="text-base font-normal">
+                    - Other buildings and sites are shaded in{" "}
+                    <a className="font-semibold text-gray-400"> gray</a> .
+                  </h3>
+                  <h3 className="text-base font-normal mb-2">
+                    The map is 500 meters (about 547 yards) in both width and
+                    height.
+                  </h3>
+                  <h3 className="text-base font-normal mb-2">
+                    <a className="font-semibold">Note:</a> There could be{" "}
+                    <a className="underline">more than one </a>way to describe a
+                    location.
+                  </h3>
+                  <h3 className="text-base font-normal mb-2">
+                    For example, in the above image, the location shown can be
+                    described as{" "}
+                    <a className="font-semibold">
+                      {"“"}near{"”"}
+                    </a>{" "}
+                    the building, as well as{" "}
+                    <a className="font-semibold">
+                      {"“"}in front of{"”"}
+                    </a>{" "}
+                    the building. However, it cannot be described as{" "}
+                    <a className="font-semibold">
+                      {"“"}in{"”"}
+                    </a>
+                    , or{" "}
+                    <a className="font-semibold">
+                      {"“"}far from{"”"}
+                    </a>{" "}
+                    the building. Therefore, please answer{" "}
+                    <a className="font-semibold">
+                      {"“"}Yes{"”"}
+                    </a>{" "}
+                    for <a className="underline">both</a>{" "}
+                    <a className="font-semibold">
+                      {"“"}
+                      near{"”"}
+                    </a>{" "}
+                    and{""}{" "}
+                    <a className="font-semibold">
+                      {"“"}in front of{" ”"}
+                    </a>
+                    , and answer{" "}
+                    <a className="font-semibold">
+                      {"“"}No{"”"}
+                    </a>{" "}
+                    for{" "}
+                    <a className="font-semibold">
+                      {"“"}in{"”"}
+                    </a>{" "}
+                    and{" "}
+                    <a className="font-semibold">
+                      {"“"}far from{"”"}.
+                    </a>
+                  </h3>
+                  <h3 className="text-base font-normal mb-2">
+                    More labeling examples:
+                  </h3> */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <img
+                    src="https://media.discordapp.net/attachments/1133782115708833933/1145028141589471394/image.png?width=618&height=1064"
+                    alt="Map Example"
+                    width={400}
+                    height={400}
+                    className="mb-2"
+                  ></img> */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <img
+                    src="https://media.discordapp.net/attachments/1133782115708833933/1145106308446552096/image.png?width=596&height=1046"
+                    alt="Map Example"
+                    width={400}
+                    height={400}
+                    className="mb-2"
+                  ></img> */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <img
+                    src="https://cdn.discordapp.com/attachments/1133782115708833933/1146491104598949939/image.png"
+                    alt="Map Example"
+                    width={400}
+                    height={400}
+                    className="mb-2"
+                  ></img> */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* <img
+                    src="https://media.discordapp.net/attachments/1133782115708833933/1145028887265427538/image.png?width=612&height=1064"
+                    alt="Map Example"
+                    width={400}
+                    height={400}
+                    className="mb-2"
+                  ></img> */}
+          {/* </div>
+              </div>
+            )}
+          </div> */}
+
+          <div className="mb-2">
+            <Button
+              className="text-xl font-semibold border-none"
+              onClick={handleSectionThreeClick}
+            >
+              II.{`)`} Navigating between Images
+              {isSectionThreeOpen ? (
+                <KeyboardArrowDownIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Button>
+            {isSectionThreeOpen && (
+              <div className="ml-8">
+                <h3 className="text-base font-normal mb-2">
+                  1. On the main page, <a className="font-semibold">click</a>{" "}
+                  the “
+                  <a className="font-semibold text-blue-500">Start labeling</a>”
+                  button to start labeling.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1145029781457469571/image.png?width=844&height=1064"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+                <h3 className="text-base font-normal mb-2">
+                  2. For each image, after making Yes/No selections, click the{" "}
+                  <a className="font-semibold">
+                    {"“"}Submit{"”"}
+                  </a>{" "}
+                  button and it will automatically move to the next image.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1148675244324823080/image.png?width=592&height=1064"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+                <h3 className="text-base font-normal mb-2">
+                  3. You can go back to the main page anytime by clicking the{" "}
+                  <a className="font-semibold">
+                    {"“"}Main Page{"”"}
+                  </a>{" "}
+                  button at the top left.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1145030878402187344/image.png?width=1996&height=560"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+                <h3 className="text-base font-normal mb-2">
+                  4. On the main page, you can edit your previously submitted
+                  answers by scrolling down to the{" "}
+                  <a className="font-semibold">
+                    {"“"}Labeled Data{"”"}
+                  </a>{" "}
+                  section to see all your submitted images. Click{" "}
+                  <a className="font-semibold text-blue-500">
+                    {"“"}Edit Label{"”"}
+                  </a>{" "}
+                  next to the image you want to edit.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1145031538250104972/image.png?width=656&height=1064"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+                <h3 className="text-base font-normal mb-2">
+                  5. Once you have labeled all the images, the “labeled” counter
+                  on the top right of the screen will show {"“"}30/30{"”"}. Go
+                  back to the main page and click the{" "}
+                  <a className="font-semibold">
+                    {"“"}Redeem Code{"”"}
+                  </a>{" "}
+                  button to receive the completion code for Prolific.
+                </h3>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1145032104506294393/image.png?width=1524&height=760"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1145032162698076221/image.png?width=2160&height=1014"
+                  alt="Map Example"
+                  width={400}
+                  height={400}
+                  className="mb-2"
+                ></img>
+              </div>
+            )}
+          </div>
         </div>
       </Modal>
     </>

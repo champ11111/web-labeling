@@ -14,6 +14,7 @@ import {
   DataItem,
   RedeemCode,
   dataAtom,
+  labelledDataAtom,
   unlabelledDataAtom,
 } from "@/atom/data-atom";
 import moment from "moment";
@@ -28,7 +29,7 @@ const paginationConfig = {
 const DataPage: React.FC = () => {
   const router = useRouter();
   const [unlabelledData, setUnlabelledData] = useAtom(unlabelledDataAtom);
-  const [labelledData, setLabelledData] = useState<DataItem[]>([]);
+  const [labelledData, setLabelledData] = useAtom(labelledDataAtom);
   const [username, setUsername] = useState<string>("");
   const [data, setData] = useAtom(dataAtom);
 
@@ -213,17 +214,22 @@ const DataPage: React.FC = () => {
         <Navbar username={username} />
         <Card className="flex justify-center items-center p-8 rounded-none">
           <>
-            <div className="flex justify-between relative items-end">
-              <Button onClick={showModal}>Redeem Code</Button>
-              <div className="flex flex-col">
-                <span>{labelledData.length}/30 labeled data</span>
-                <Button
-                  className="bg-blue-500"
-                  type="primary"
-                  onClick={onStartLabelingClickHandler}
-                >
-                  Start Labeling
-                </Button>
+            <div className="flex flex-col  text-center">
+              <div>
+                **Please read the instruction and the examples carefully.**
+              </div>
+              <div className="flex justify-between relative items-end">
+                <Button onClick={showModal}>Redeem Code</Button>
+                <div className="flex flex-col">
+                  <span>{labelledData.length}/30 labeled</span>
+                  <Button
+                    className="bg-blue-500"
+                    type="primary"
+                    onClick={onStartLabelingClickHandler}
+                  >
+                    Start Labeling
+                  </Button>
+                </div>
               </div>
             </div>
             <Modal
