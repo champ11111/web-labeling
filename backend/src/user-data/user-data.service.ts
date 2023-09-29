@@ -85,7 +85,7 @@ export class UserDataService {
     });
 
     if (countUserDataLabelled > 0 && countUserDataLabelled === 30) {
-      const redeemCode = 'CA03XIBV';
+      const redeemCode = 'CLT5YFTN';
 
       await this.prisma.redeemCode.create({
         data: {

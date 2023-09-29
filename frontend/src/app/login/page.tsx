@@ -35,11 +35,8 @@ const LoginPage: React.FC = () => {
         className="bg-white shadow-md rounded px-8 py-6"
         style={{ width: 300 }}
       >
-        <div className="flex flex-col  text-center">
-          <div>**Please read the instruction and the examples carefully.**</div>
-          <div className="mt-2 mb-4 flex justify-end ">
-            <InstructionButton />
-          </div>
+        <div className="mb-4 flex justify-end ">
+          <InstructionButton />
         </div>
         {loginError && (
           <Alert

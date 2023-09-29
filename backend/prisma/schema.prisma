@@ -21,14 +21,13 @@ model User {
 }
 
 model UserData {
-  id         String    @id @default(cuid())
-  user       User      @relation(fields: [userId], references: [id])
-  userId     String    @map("user_id")
-  data       Data      @relation(fields: [dataId], references: [id])
-  dataId     String    @map("data_id")
-  isLabelled Boolean   @default(false) @map("is_labelled")
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime? @updatedAt @map("updated_at")
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @map("user_id")
+  data       Data     @relation(fields: [dataId], references: [id])
+  dataId     String   @map("data_id")
+  isLabelled Boolean  @default(false) @map("is_labelled")
+  createdAt  DateTime @default(now()) @map("created_at")
   answers    String[]
 
   @@unique([userId, dataId])
@@ -62,8 +61,7 @@ model DataSet {
 }
 
 model RedeemCode {
-  id        String   @id @default(cuid())
-  code      String
+  code      String   @id
   createdAt DateTime @default(now()) @map("created_at")
   userId    String   @map("user_id")
   user      User     @relation(fields: [userId], references: [id])
