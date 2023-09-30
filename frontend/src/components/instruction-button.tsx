@@ -216,7 +216,7 @@ const InstructionButton: React.FC = () => {
                 </h3>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://media.discordapp.net/attachments/1133782115708833933/1151039395437223986/image.png?width=696&height=1074"
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1157237162572525598/y03Yrv5klKQYDZ0P1JTdjTVb1knIjI83RbOKaB9XtGzKabFLr6rLA-SyLcmnbEnVCPTN4jL64kmN8MMs8kspPpz_ZfhC0Oj8ExO9Qc52gXFfxNnNLDt9RHkYQEzK.png?ex=6517e097&is=65168f17&hm=2d97f4b507d056d5db51c0a5d636cf677ccb3075086d6ba617bc20090933c46f&=&width=664&height=1042"
                   alt="Map Example"
                   width={400}
                   height={400}
@@ -299,7 +299,7 @@ const InstructionButton: React.FC = () => {
                 </h3>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://media.discordapp.net/attachments/1133782115708833933/1150762556655411320/image.png?width=678&height=1056"
+                  src="https://media.discordapp.net/attachments/1133782115708833933/1157237226699227217/XAIGkSHabWn6DS-lCJMqesuDdsBTBzCWPRm3IYoXTE_tyjOAckguSN9so95QG7RHasXshJv22Yra3XIDRGwzZstKxbkMHS2iQIV5kAkJ9tvSDOXOaizUl0f1x9LV.png?ex=6517e0a7&is=65168f27&hm=865f7e09772ae66472ffe5ff06f19412cce8b638e1cd9429965197155ccc8679&=&width=668&height=1040"
                   alt="Map Example"
                   width={400}
                   height={400}
